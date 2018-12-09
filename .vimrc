@@ -1,67 +1,105 @@
-set nocompatible
-filetype off
+" Vundle Config
+" ---------------------------------------------------------
+set nocompatible        " required
+filetype off            " required
 
+" Set the runtime path to include Vundle
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+
+" Vundle plugins
+" ---------------------------------------------------------
 Plugin 'gmarik/Vundle.vim'
 Plugin 'morhetz/gruvbox'
 Plugin 'mattn/emmet-vim'
 Plugin 'scrooloose/nerdtree'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'ajh17/spacegray.vim'
 
 call vundle#end()
+
+
+" VIM Config
+" ---------------------------------------------------------
+
+" Base
+set encoding=utf-8
+syntax on                           " syntax highlighting
+filetype plugin on                  " filetype detection
 filetype plugin indent on
+set backspace=indent,eol,start      " backspace key works normally
+set showmode                        " show current mode
+set number relativenumber           " current line in absolute, others in relative
+set wildmenu                        " show suggestions
+set autoread                        " reload file when modified
+set updatetime=100                  " faster gitgutter update
+set ttimeoutlen=10                  " faster mode update
+
+" Remove Arrow key
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
+
+" Scroll
+set scrolloff=10                    " start scroll 10 lines before the end of the screen
+set sidescrolloff=15                " start scroll 15 characters before the end of the line
+set sidescroll=1
 
 " Colorscheme
 set t_Co=256
 set background=dark
 colorscheme gruvbox
+" colorscheme spacegray
 
 " Fix Bug background color on 256colors terminal
 if &term =~ '256color'
     set t_ut=
 endif
 
-set encoding=utf-8
-syntax on
-set number relativenumber
-colorscheme gruvbox
+" Indentation
+set autoindent                      " always set autoindent on
+set smartindent                     " smart indent after brackets
+set smarttab
+set expandtab                       " set tabs to two spaces
+set tabstop=4                       " same
+set softtabstop=4                   " same
+set shiftwidth=4                    " same
 
-set autoindent
-set smartindent
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set expandtab
-set showmode
-set nowrap
-set ignorecase
-set nobackup
-set noswapfile
+" Backup
+set backupdir=~/.vim/vimtmp,.
+set directory=~/.vim/vimtmp,.
+" set nobackup                      " if backup is not needed
+" set noswapfile                    " if swapfile is not needed
+" set nowritebackup
 
-set hlsearch
+set list listchars=tab:\ \ ,trail:· " show invisible characters when typing
+set nowrap                          " don't show entire line
 
-set laststatus=2
-function! GitBranch()
-  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-endfunction
+" Search
+set hlsearch                        " highlight search results
+set incsearch                       " find the next match as we type
+set ignorecase                      " case insensitive search
 
-function! StatuslineGit()
-  let l:branchname = GitBranch()
-  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
-endfunction
+" Airline
+let g:airline_theme='murmur'
+set laststatus=0
 
-set statusline=
-set statusline+=%#PmenuSel#
-set statusline+=%{StatuslineGit()}
-set statusline+=%#LineNr#
-set statusline+=\ %f
-set statusline+=%m\
-set statusline+=%=
-set statusline+=%#CursorColumn#
-set statusline+=\ %y
-set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
-set statusline+=\[%{&fileformat}\]
-set statusline+=\ %p%%
-set statusline+=\ %l:%c
-set statusline+=\
+" NERDTree
+let NERDTreeMinimalUI = 1
+autocmd vimenter * NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd VimEnter * wincmd p
+
+" CTRLP
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_custom_ignore = {
+ \ 'dir' : '\.sass-cache$\|bower_components$\|node_modules$\|\.git$\|tmp$\|\.svn$\|\.sass-cache$\|public/compiled$\|vendor/gems$',
+ \ 'file': '\.git$\|\.hg$\|\.svn$\|\.scssc$'
+ \ }
