@@ -8,6 +8,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 
+
 " Vundle plugins
 " ---------------------------------------------------------
 Plugin 'gmarik/Vundle.vim'
@@ -20,8 +21,10 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'ajh17/spacegray.vim'
+Plugin 'pangloss/vim-javascript'
 
 call vundle#end()
+
 
 
 " VIM Config
@@ -66,10 +69,10 @@ endif
 set autoindent                      " always set autoindent on
 set smartindent                     " smart indent after brackets
 set smarttab
-set expandtab                       " set tabs to two spaces
-set tabstop=4                       " same
-set softtabstop=4                   " same
-set shiftwidth=4                    " same
+set tabstop=4                       " tabs width = 4 columns
+set softtabstop=0                   " no space on tabs
+set noexpandtab                     " same
+set shiftwidth=4                    " which width is used to reindent
 
 " Backup
 set backupdir=~/.vim/vimtmp,.
@@ -78,7 +81,8 @@ set directory=~/.vim/vimtmp,.
 " set noswapfile                    " if swapfile is not needed
 " set nowritebackup
 
-set list listchars=tab:\ \ ,trail:· " show invisible characters when typing
+" set list listchars=tab:\ \ ,trail:· " show invisible characters when typing
+set list listchars=tab:→\ ,space:·,nbsp:␣,trail:•
 set nowrap                          " don't show entire line
 
 " Search
@@ -103,3 +107,6 @@ let g:ctrlp_custom_ignore = {
  \ 'dir' : '\.sass-cache$\|bower_components$\|node_modules$\|\.git$\|tmp$\|\.svn$\|\.sass-cache$\|public/compiled$\|vendor/gems$',
  \ 'file': '\.git$\|\.hg$\|\.svn$\|\.scssc$'
  \ }
+
+" Vim-javascript
+let g:javascript_plugin_jsdoc = 1
