@@ -22,6 +22,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'ajh17/spacegray.vim'
 Plugin 'pangloss/vim-javascript'
+Plugin 'aonemd/kuroi.vim'
 
 call vundle#end()
 
@@ -42,6 +43,7 @@ set wildmenu                        " show suggestions
 set autoread                        " reload file when modified
 set updatetime=100                  " faster gitgutter update
 set ttimeoutlen=10                  " faster mode update
+set path+=**                        " vanilla fuzzy-search
 
 " Remove Arrow key
 noremap <Up> <NOP>
@@ -57,8 +59,9 @@ set sidescroll=1
 " Colorscheme
 set t_Co=256
 set background=dark
-colorscheme gruvbox
+" colorscheme gruvbox
 " colorscheme spacegray
+colorscheme kuroi
 
 " Fix Bug background color on 256colors terminal
 if &term =~ '256color'
